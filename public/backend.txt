@@ -1,0 +1,114 @@
+To track who has filled out the form and what details they've submitted, you need to set up a backend to handle form submissions. Here's how you can do it step by step:
+
+---
+
+### 1. **Set up an API Route in Next.js**
+You can create an API route in your Next.js application to receive form submissions. 
+
+Create a new file at `pages/api/contact.ts`:
+
+```typescript
+import { NextApiRequest, NextApiResponse } from 'next';
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    if (req.method === 'POST') {
+        const { name, email, subject, message } = req.body;
+
+        // Log form data (for now)
+        console.log('New Contact Submission:', { name, email, subject, message });
+
+        // TODO: Add logic to store this data (e.g., in a database)
+
+        res.status(200).json({ message: 'Form submitted successfully!' });
+    } else {
+        res.status(405).json({ message: 'Method not allowed' });
+    }
+}
+```
+
+---
+
+### 2. **Submit the Form to the API**
+Update your `handleSubmit` function to make a POST request to the API route:
+
+```typescript
+const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            console.log('Form submitted successfully!');
+            setFormData({
+                name: '',
+                email: '',
+                subject: '',
+                message: '',
+            });
+        } else {
+            console.error('Failed to submit form:', await response.text());
+        }
+    } catch (error) {
+        console.error('Error submitting form:', error);
+    }
+};
+```
+
+---
+
+### 3. **Store the Data**
+Instead of just logging the form data in the API route, store it in a database. For example:
+
+#### Using **Supabase**:
+- Create a table named `contact_submissions` with columns: `id`, `name`, `email`, `subject`, `message`, and `submitted_at`.
+
+Update your API route to save the data to Supabase:
+
+```typescript
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!);
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    if (req.method === 'POST') {
+        const { name, email, subject, message } = req.body;
+
+        const { data, error } = await supabase
+            .from('contact_submissions')
+            .insert([{ name, email, subject, message, submitted_at: new Date() }]);
+
+        if (error) {
+            console.error('Error saving data:', error);
+            return res.status(500).json({ message: 'Error saving data' });
+        }
+
+        res.status(200).json({ message: 'Form submitted successfully!', data });
+    } else {
+        res.status(405).json({ message: 'Method not allowed' });
+    }
+}
+```
+
+#### Using **Email Notifications** (Optional):
+You can send yourself an email whenever someone submits the form using services like [SendGrid](https://sendgrid.com/) or [Nodemailer](https://nodemailer.com/).
+
+---
+
+### 4. **Access and Review Submissions**
+- If stored in a database like Supabase, query the `contact_submissions` table via Supabase's dashboard or API.
+- Alternatively, set up email notifications to receive submissions directly to your inbox.
+
+---
+
+### 5. **Add Admin Panel (Optional)**
+Create a secure admin panel in your app to list, search, and manage form submissions. Use Supabase to fetch and display the data securely.
+
+---
+
+Would you like assistance implementing any of these steps?

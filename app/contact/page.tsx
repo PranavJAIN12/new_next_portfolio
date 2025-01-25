@@ -26,28 +26,31 @@ export default function Contact() {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            // Add your form submission logic here
-            console.log('Form submitted:', formData);
-
-            // Example API call (uncomment and modify as needed):
-            // const response = await fetch('/api/contact', {
-            //   method: 'POST',
-            //   headers: {
-            //     'Content-Type': 'application/json',
-            //   },
-            //   body: JSON.stringify(formData),
-            // });
-            // const data = await response.json();
-
-            // Clear form after successful submission
-            setFormData({
-                name: '',
-                email: '',
-                subject: '',
-                message: ''
+            // Use full URL for local development
+            const response = await fetch("http://localhost:3000/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
             });
+    
+            // Log full response for debugging
+            const responseText = await response.text();
+            console.log('Response:', responseText);
+    
+            // Parse JSON manually
+            const data = JSON.parse(responseText);
+    
+            if (response.ok) {
+                alert(data.message);
+                setFormData({name: '', email: '', subject: '', message: ''});
+            } else {
+                alert(data.error || 'An error occurred');
+            }
         } catch (error) {
-            console.error('Error submitting form:', error);
+            console.error("Error submitting form:", error);
+            alert("An unexpected error occurred. Please try again.");
         }
     };
 
