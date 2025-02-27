@@ -218,6 +218,8 @@ export default function Contact() {
                                 </Button>
                             </form>
                         </CardContent>
+                        <h1 className='font-bold'>To book a appointment or call, <Link href={"https://book-appointment-pranav.vercel.app/"} className='text-blue-600'>Book Here</Link></h1>
+                        
                     </Card>
                 </div>
             </div>
