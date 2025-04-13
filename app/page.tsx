@@ -85,15 +85,15 @@ const Portfolio = () => {
       image: "/img2.png",
       link: "https://blogverse-ten.vercel.app/"
     },
-    // {
-    //   id: 3,
-    //   title: "Cloud Infrastructure Monitor",
-    //   description: "Real-time monitoring system for cloud infrastructure with predictive scaling",
-    //   techs: ["Go", "Kubernetes", "Prometheus", "gRPC"],
-    //   metrics: ["1000+ Servers", "5B+ Daily Events", "99.99% Accuracy"],
-    //   image: "/api/placeholder/600/400",
-    //   link: "#"
-    // }
+    {
+      id: 3,
+      title: "Bazarro: E-commerce",
+      description: "Real-time ecomm store",
+      techs: ["NextJs", "MongoDB", "Stripe", "FakeStore API", "Next-Auth", "redux"],
+      metrics: ["Real-Time Product Search", "Responsive Design", "99.99% Accuracy"],
+      image: "/bazarro.png",
+      link: "https://github.com/PranavJAIN12/bazaaro"
+    }
   ];
 
   const skills = {
