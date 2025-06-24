@@ -87,10 +87,21 @@ const Portfolio = () => {
     },
     {
       id: 3,
+      title: "CoachLume – Your AI Voice Learning Platform",
+      description: "CoachLume is an AI-powered voice learning platform that helps users practice mock interviews, lectures, and communication skills through real-time conversations with expert AI agents. It features resume-based sessions, a credit system, role selection, voice interaction",
+      techs: ["NextJs", "Convex", "Stripe", "Gemini AI API", "Stack-Auth", "ShadCN"],
+      metrics: [ "Real-Time Voice Interaction",
+      "Resume-Based Interview Sessions",
+      "Under 1.5s Average Latency"],
+      image: "/coachlume.png",
+      link: "https://coachlume.vercel.app/"
+    },
+     {
+      id: 4,
       title: "Bazarro: E-commerce",
-      description: "Real-time ecomm store",
+      description:"Bazarro is a modern e-commerce web app featuring real-time product search, secure Stripe checkout, and dynamic product data from the FakeStore API. It includes login with NextAuth and Redux for cart and state management.",
       techs: ["NextJs", "MongoDB", "Stripe", "FakeStore API", "Next-Auth", "redux"],
-      metrics: ["Real-Time Product Search", "Responsive Design", "99.99% Accuracy"],
+      metrics: ["Real-Time Product Search", "Responsive Design", "Secure Stripe Payments"],
       image: "/bazarro.png",
       link: "https://github.com/PranavJAIN12/bazaaro"
     }
